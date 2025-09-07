@@ -1,0 +1,15 @@
+{
+  "name": "the-reed-monorepo",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules/ pnpm-lock.yaml apps/backend/node_modules/ apps/mobile/node_modules/ packages/swag/node_modules/"
+  },
+  "keywords": [],
+  "author": "NightfuryEquinn"
+}

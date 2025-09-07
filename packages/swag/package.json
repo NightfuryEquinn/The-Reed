@@ -1,0 +1,21 @@
+{
+  "name": "@the-reed/swag",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "author": "NightfuryEquinn",
+  "keywords": [],
+  "main": "index.ts",
+  "scripts": {
+    "swag": "orval --config ./orval.config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.13",
+    "orval": "^7.11.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@the-reed/swag": "file:",
+    "vite": "^6.3.5"
+  }
+}
