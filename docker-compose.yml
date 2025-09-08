@@ -1,0 +1,26 @@
+services:
+  db-local:
+    image: postgres:the-reed
+    container_name: the-reed-backend-db
+    environment:
+      POSTGRES_USER: the-reed
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: the_reed_backend
+    ports:
+      - '5432:5432'
+    networks:
+      - the-reed-network
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -d the_reed_backend -U postgres]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - the-reed-db-data:/var/lib/postgresql/data
+
+networks:
+  the-reed-network:
+
+volumes:
+  the-reed-db-data:

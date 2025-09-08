@@ -1,0 +1,21 @@
+# Ignore node_modules
+**/node_modules
+
+# Ignore logs
+**/*.log
+
+# Ignore build directories
+**/dist
+**/build
+
+# Ignore local environment files
+**/.env
+
+# Ignore Docker-related files
+Dockerfile
+docker-compose.yml
+
+# Ignore other common files
+.git
+.gitignore
+.DS_Store 
