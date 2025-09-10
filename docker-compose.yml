@@ -1,6 +1,6 @@
 services:
   db-local:
-    image: postgres:the-reed
+    image: postgres
     container_name: the-reed-backend-db
     environment:
       POSTGRES_USER: the-reed
