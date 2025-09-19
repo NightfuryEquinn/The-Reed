@@ -1,6 +1,5 @@
 import { Platform } from 'react-native';
-import { tokenStorage } from './../../../apps/mobile/connection/store';
-import { authControllerRefresh } from './api';
+import { tokenStorage } from './../../../apps/mobile/repos/store';
 
 const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000'
 
