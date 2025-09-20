@@ -1,5 +1,4 @@
 import Card from "@/components/button/Card";
-import Title from "@/components/label/Title";
 import { View } from "react-native";
 
 export default function Practice() {

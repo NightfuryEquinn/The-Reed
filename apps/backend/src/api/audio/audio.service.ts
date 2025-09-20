@@ -12,10 +12,23 @@ export class AudioService {
   ) {}
 
   async upload(
-    userId: number,
+    email: string,
     file: Express.Multer.File
   ) {
     await this.db.transaction().execute(async (trx) => {
+
+      const user = await trx.selectFrom('user')
+        .select(['id'])
+        .where('email', '=', email)
+        .executeTakeFirst()
+
+      if (!user) {
+        throw new ErrorResponseDto({
+          message: 'User not found',
+          statusCode: ErrorCode.NOT_FOUND
+        })
+      }
+
       const uploadedAudio = await this.s3Service.uploadSingleFile({
         file: file,
         isPublic: true
@@ -23,10 +36,10 @@ export class AudioService {
 
       await trx.insertInto('audio_upload')
         .values({
-          user_id: userId,
+          user_id: user.id,
           s3_key: uploadedAudio.key,
           s3_url: uploadedAudio.url,
-          duration: uploadedAudio.duration,
+          duration: Math.round(uploadedAudio.duration),
           file_format: uploadedAudio.fileFormat,
           created_at: new Date(),
           updated_at: new Date()

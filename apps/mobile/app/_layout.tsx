@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import "../styles/global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
-import { tokenStorage, userStorage } from "@/repos/store";
+import { idTokenStorage, tokenStorage, userStorage } from "@/repos/store";
 
 SplashScreen.preventAutoHideAsync()
 
@@ -50,6 +50,7 @@ export default function RootLayout() {
           })
 
           await tokenStorage.setToken(session.tokens.accessToken?.toString() || '')
+          await idTokenStorage.setIdToken(session.tokens.idToken?.toString() || '')
 
           router.push('/dashboard')
         } else {

@@ -3,9 +3,9 @@ export enum ValidationErrors {
 }
 
 export enum UserRoles {
-  BASSOONIST = 'Bassoonist',
-  MENTOR = 'Mentor',
-  ADMIN = 'Admin'
+  BASSOONIST = 'bassoonist',
+  MENTOR = 'mentor',
+  ADMIN = 'admin'
 }
 
 export type JwtPayload = {

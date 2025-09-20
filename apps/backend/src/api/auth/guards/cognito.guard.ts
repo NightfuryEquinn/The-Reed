@@ -46,7 +46,7 @@ export class CognitoAuthGuard implements CanActivate {
       request.user = payload;
 
       if (requiredRoles?.length) {
-        const userRoles = (payload['cognito:groups'] as string[] | undefined) ?? [];
+        const userRoles = (payload['custom:roles'] ?? []) as string[];
         const hasRole = requiredRoles.some((role) => userRoles.includes(role));
 
         if (!hasRole) {

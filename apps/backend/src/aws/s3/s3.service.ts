@@ -15,10 +15,18 @@ export class S3Service {
     private readonly configService: ConfigService
   ) {
     const s3_region = this.configService.get('S3_REGION')
+    const bucketName = this.configService.get('S3_BUCKET')
 
     if (!s3_region) {
       throw new Error('S3_REGION not found in env.')
     }
+
+    if (!bucketName) {
+      throw new Error('S3_BUCKET not found in env.')
+    }
+
+    this.bucketName = bucketName
+    this.region = s3_region
 
     this.client = new S3Client({
       region: s3_region,

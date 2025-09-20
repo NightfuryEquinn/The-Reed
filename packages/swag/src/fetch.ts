@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { tokenStorage } from './../../../apps/mobile/repos/store';
+import { idTokenStorage, tokenStorage } from './../../../apps/mobile/repos/store';
 
 const baseUrl = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000'
 
@@ -116,21 +116,12 @@ export async function fetchInstance<T>(
 
   if (!response.ok) {
     if (response.status === 401) {
-      const refreshToken = await tokenStorage.getRefreshToken()
-
-      if (!refreshToken) {
-        throw new Error("No refresh token available")
-      }
-
       try {
-        // Refresh the token
-        const refreshResponse = await authControllerRefresh({ refreshToken })
-
-        await tokenStorage.setToken(refreshResponse.accessToken)
+        const idToken = await idTokenStorage.getIdToken()
 
         const retryHeaders = {
           ...headers,
-          authorization: `Bearer ${refreshResponse.accessToken}`,
+          authorization: `Bearer ${idToken}`,
         }
 
         const retryResponse = await fetch(
@@ -162,7 +153,7 @@ export async function fetchInstance<T>(
         }
 
       } catch (error) {
-        console.error("Failed to refresh access token:", error)
+        console.error("Failed to inner fetch:", error)
         throw error
       }
     }

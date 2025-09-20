@@ -53,3 +53,31 @@ export const tokenStorage = {
     }
   },
 };
+
+
+export const idTokenStorage = {
+  getIdToken: async (): Promise<string | null> => {
+    try {
+      return await AsyncStorage.getItem('id_token');
+    } catch (error) {
+      console.error('Error getting id token:', error);
+      return null;
+    }
+  },
+
+  setIdToken: async (token: string): Promise<void> => {
+    try {
+      await AsyncStorage.setItem('id_token', token);
+    } catch (error) {
+      console.error('Error setting id token:', error);
+    }
+  },
+
+  removeIdToken: async (): Promise<void> => {
+    try {
+      await AsyncStorage.removeItem('id_token');
+    } catch (error) {
+      console.error('Error removing id token:', error);
+    }
+  },
+};
