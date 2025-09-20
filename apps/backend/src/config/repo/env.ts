@@ -8,6 +8,9 @@ export type EnvVars = {
   S3_SECRET_KEY: string
   S3_ENDPOINT: string
   S3_BUCKET: string
+  COGNITO_DOMAIN: string
+  COGNITO_USER_POOL_ID: string
+  COGNITO_CLIENT_ID: string
 }
 
 export const getEnvConfig = () => {
@@ -21,6 +24,9 @@ export const getEnvConfig = () => {
     S3_SECRET_KEY: process.env.S3_SECRET_KEY || '',
     S3_ENDPOINT: process.env.S3_ENDPOINT || '',
     S3_BUCKET: process.env.S3_BUCKET || '',
+    COGNITO_DOMAIN: process.env.COGNITO_DOMAIN || '',
+    COGNITO_USER_POOL_ID: process.env.COGNITO_USER_POOL_ID || '',
+    COGNITO_CLIENT_ID: process.env.COGNITO_CLIENT_ID || '',
   }
 
   return env

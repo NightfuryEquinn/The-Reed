@@ -23,7 +23,7 @@ export default function Login() {
         }
       });
 
-      router.push('/dashboard')
+      router.dismissTo('/dashboard')
     } catch (error: any) {
       console.log("Login error:", error.message || error);
     }

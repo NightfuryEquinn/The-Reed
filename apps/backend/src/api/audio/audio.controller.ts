@@ -1,16 +1,15 @@
 import { UserRoles } from "@/common/types";
 import { Controller, Delete, Param, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
-import { ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
 import { Roles } from "../auth/decorators/roles.decorator";
-import { AuthGuard } from "../auth/guards/auth.guard";
-import { RolesGuard } from "../auth/guards/role.guard";
 import { AudioService } from "./audio.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { CurrentUser, UserPayload } from "../auth/decorators/current-user.decorator";
 import { RequestUploadAudioDto } from "./dto/upload.dto";
+import { CognitoAuthGuard } from "../auth/guards/cognito.guard";
 
 @ApiTags('Audio')
-@UseGuards(AuthGuard, RolesGuard)
+@UseGuards(CognitoAuthGuard)
 @Roles(UserRoles.BASSOONIST)
 @Controller('audio')
 export class AudioController {
