@@ -8,7 +8,6 @@ import { apiReference } from '@scalar/nestjs-api-reference';
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule, {
     rawBody: true,
-    bodyParser: false // For better-auth
   });
 
   app.enableCors()

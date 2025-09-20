@@ -3,6 +3,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { AuthService } from "./auth.service";
 import { AuthGuard } from "./guards/auth.guard";
 import { RolesGuard } from "./guards/role.guard";
+import { AuthController } from "./auth.controller";
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { RolesGuard } from "./guards/role.guard";
       signOptions: { expiresIn: '30m' },
     })
   ],
+  controllers: [AuthController],
   providers: [AuthService, AuthGuard, RolesGuard],
   exports: [AuthGuard, RolesGuard]
 })

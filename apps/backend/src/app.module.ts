@@ -1,8 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AudioModule } from './api/audio/audio.module';
 import { AuthModule } from './api/auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { S3Module } from './aws/s3/s3.module';
 import { ConfigModule } from './config/config.module';
 import { KyselyModule } from './kysely/kysely.module';
 import { LoggingInterceptor } from './logging/logging.interceptor';
@@ -14,7 +16,9 @@ import { LoggingModule } from './logging/logging.module';
     ConfigModule,
     KyselyModule,
     LoggingModule,
-    AuthModule
+    AuthModule,
+    S3Module,
+    AudioModule
   ],
   controllers: [AppController],
   providers: [

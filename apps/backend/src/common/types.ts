@@ -3,7 +3,7 @@ export enum ValidationErrors {
 }
 
 export enum UserRoles {
-  STUDENT = 'Student',
+  BASSOONIST = 'Bassoonist',
   MENTOR = 'Mentor',
   ADMIN = 'Admin'
 }

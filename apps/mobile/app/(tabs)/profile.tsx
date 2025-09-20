@@ -1,18 +1,32 @@
 import IconAction from "@/components/button/IconAction";
-import Title from "@/components/label/Title";
-import { View } from "react-native";
-import Constants from "expo-constants";
 import Caption from "@/components/label/Caption";
+import { tokenStorage, userStorage } from "@/repos/store";
+import { signOut } from "aws-amplify/auth";
+import Constants from "expo-constants";
+import { useRouter } from "expo-router";
+import { View } from "react-native";
 
 export default function Profile() {
+  const router = useRouter()
+
   const appVersion = Constants.expoConfig?.version || '0.0.0';
   const buildNumber = Constants.expoConfig?.ios?.buildNumber || Constants.expoConfig?.android?.versionCode || '1'
+
+  const handleLogout = async () => {
+    await userStorage.removeUser()
+    await tokenStorage.removeToken()
+
+    await signOut()
+
+    router.push('/')
+  }
 
   return (
     <View className="m-10 flex-1 justify-between">
       <View className="gap-4">
         <IconAction source="user" title="Edit Profile" />
         <IconAction source="gear" title="Settings" />
+        <IconAction source="sign-out" title="Logout" onPress={handleLogout} />
       </View>
 
       <Caption className="text-center text-2xl text-dark-grey">App Version (Build) - {appVersion} ({buildNumber})</Caption>

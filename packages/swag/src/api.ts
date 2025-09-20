@@ -6,13 +6,66 @@
  * OpenAPI spec version: 1.0
  */
 import { fetchInstance } from './fetch';
-export const appControllerGetHello = (
+export type RequestRegisterDto = {
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+};
+
+export type RequestUploadAudioDto = {
+  file: Blob;
+};
+
+export type AudioControllerDeletePathParameters = {
+ audioId: string,
+ }
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+
+  export const appControllerGetHello = (
     
- ) => {
+ options?: SecondParameter<typeof fetchInstance>,) => {
       return fetchInstance<null>(
       {url: `/`, method: 'GET'
     },
-      );
+      options);
+    }
+  
+export const authControllerRegister = (
+    requestRegisterDto: RequestRegisterDto,
+ options?: SecondParameter<typeof fetchInstance>,) => {
+      return fetchInstance<null>(
+      {url: `/auth/register`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: requestRegisterDto
+    },
+      options);
+    }
+  
+export const audioControllerUpload = (
+    requestUploadAudioDto: RequestUploadAudioDto,
+ options?: SecondParameter<typeof fetchInstance>,) => {const formData = new FormData();
+formData.append(`file`, requestUploadAudioDto.file)
+
+      return fetchInstance<null>(
+      {url: `/audio/upload`, method: 'POST',
+      headers: {'Content-Type': 'multipart/form-data', },
+       data: formData
+    },
+      options);
+    }
+  
+export const audioControllerDelete = (
+    { audioId }: AudioControllerDeletePathParameters,
+ options?: SecondParameter<typeof fetchInstance>,) => {
+      return fetchInstance<null>(
+      {url: `/audio/${audioId}`, method: 'DELETE'
+    },
+      options);
     }
   
 export type AppControllerGetHelloResult = NonNullable<Awaited<ReturnType<typeof appControllerGetHello>>>
+export type AuthControllerRegisterResult = NonNullable<Awaited<ReturnType<typeof authControllerRegister>>>
+export type AudioControllerUploadResult = NonNullable<Awaited<ReturnType<typeof audioControllerUpload>>>
+export type AudioControllerDeleteResult = NonNullable<Awaited<ReturnType<typeof audioControllerDelete>>>

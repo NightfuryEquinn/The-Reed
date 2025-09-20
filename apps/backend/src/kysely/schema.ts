@@ -52,7 +52,30 @@ export interface _LogHttpRequestRaw {
   status: number | null;
 }
 
+export interface AudioUpload {
+  created_at: Generated<Timestamp>;
+  duration: number;
+  file_format: string;
+  id: Generated<number>;
+  s3_key: string;
+  s3_url: string;
+  updated_at: Generated<Timestamp>;
+  user_id: number;
+}
+
+export interface User {
+  created_at: Generated<Timestamp>;
+  email: string;
+  id: Generated<number>;
+  password: string;
+  role: string;
+  updated_at: Generated<Timestamp>;
+  username: string;
+}
+
 export interface DB {
   _log_http_request_error: _LogHttpRequestError;
   _log_http_request_raw: _LogHttpRequestRaw;
+  audio_upload: AudioUpload;
+  user: User;
 }

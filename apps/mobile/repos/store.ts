@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { UserRoles } from "./types"
 
 export const userStorage = {
   getUser: async (): Promise<string | null> => {
@@ -11,7 +10,7 @@ export const userStorage = {
     }
   },
 
-  setUser: async (user: { id: number, email: string, username: string, userType: UserRoles }) => {
+  setUser: async (user: { id: string, email: string, username: string, userType: string }) => {
     try {
       await AsyncStorage.setItem('user_session', JSON.stringify(user));
     } catch (error) {
@@ -51,31 +50,6 @@ export const tokenStorage = {
       await AsyncStorage.removeItem('access_token');
     } catch (error) {
       console.error('Error removing token:', error);
-    }
-  },
-
-  getRefreshToken: async (): Promise<string | null> => {
-    try {
-      return await AsyncStorage.getItem('refresh_token');
-    } catch (error) {
-      console.error('Error getting refresh token:', error);
-      return null;
-    }
-  },
-
-  setRefreshToken: async (token: string): Promise<void> => {
-    try {
-      await AsyncStorage.setItem('refresh_token', token);
-    } catch (error) {
-      console.error('Error setting refresh token:', error);
-    }
-  },
-
-  removeRefreshToken: async (): Promise<void> => {
-    try {
-      await AsyncStorage.removeItem('refresh_token');
-    } catch (error) {
-      console.error('Error removing refresh token:', error);
     }
   },
 };

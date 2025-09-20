@@ -2,6 +2,35 @@ import { sql, type Kysely } from 'kysely'
 
 export async function up(db: Kysely<any>): Promise<void> {
   /**
+   * User
+   */
+  await db.schema
+    .createTable('user')
+    .addColumn('id', 'serial', (col) => col.primaryKey())
+    .addColumn('email', 'text', (col) => col.notNull().unique())
+    .addColumn('username', 'text', (col) => col.notNull().unique())
+    .addColumn('password', 'text', (col) => col.notNull())
+    .addColumn('role', 'text', (col) => col.notNull())
+    .addColumn('created_at', 'timestamptz', (col) => col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull())
+    .addColumn('updated_at', 'timestamptz', (col) => col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull())
+    .execute();
+
+  /**
+   * Audio uploads
+   */
+  await db.schema
+    .createTable('audio_upload')
+    .addColumn('id', 'serial', (col) => col.primaryKey())
+    .addColumn('user_id', 'integer', (col) => col.notNull().references('user.id'))
+    .addColumn('s3_key', 'text', (col) => col.notNull())
+    .addColumn('s3_url', 'text', (col) => col.notNull())
+    .addColumn('duration', 'integer', (col) => col.notNull())
+    .addColumn('file_format', 'text', (col) => col.notNull())
+    .addColumn('created_at', 'timestamptz', (col) => col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull())
+    .addColumn('updated_at', 'timestamptz', (col) => col.defaultTo(sql`CURRENT_TIMESTAMP`).notNull())
+    .execute();
+    
+  /**
    * Database request logging
    */
   await db.schema
@@ -66,4 +95,10 @@ export async function down(db: Kysely<any>): Promise<void> {
   await db.schema.dropTable('_log_http_request_error').execute()
   await db.schema.dropTable('_log_http_request_raw').execute()
   await db.schema.dropType('request_method_type').ifExists().execute()
+  
+  await db.schema.dropTable('audio_upload').execute()
+  await db.schema.dropTable('user').execute()
+
+  await db.schema.dropType('audio_file_format_type').ifExists().execute()
+  await db.schema.dropType('user_role_type').ifExists().execute()
 }
