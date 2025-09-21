@@ -4,7 +4,7 @@ A simple POC for bassoonists to utilise AI audio analysis to improve on their sk
 - Targeted audience: Malaysian (due to the lack of coaching and lessons)
 
 ### Proposed Architecture
-![Architecture Diagram]('./proposed.png')
+![Architecture Diagram](/proposed.png)
 
 - AWS Cognito (For user verification)
 - AWS Lambda (For audio analysis invocation)
