@@ -81,7 +81,7 @@ export async function fetchInstance<T>(
   const isJson = config.headers?.["Content-Type"] === "application/json"
 
   // Retrieve the token from local storage
-  const token = await tokenStorage.getToken()
+  const token = await idTokenStorage.getIdToken()
 
   // Build headers, including authorization with token
   const headers = {

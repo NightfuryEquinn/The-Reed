@@ -34,7 +34,6 @@ export class S3Service {
         accessKeyId: this.configService.get('S3_ACCESS_KEY'),
         secretAccessKey: this.configService.get('S3_SECRET_KEY')
       },
-      endpoint: this.configService.get('S3_ENDPOINT'),
       forcePathStyle: true
     })
   }
@@ -51,7 +50,7 @@ export class S3Service {
       const metadata = await mm.parseBuffer(file.buffer, file.mimetype);
       const duration = metadata.format.duration;
 
-      const key = `${uuidv4()}`
+      const key = `uploads/${uuidv4()}`
       const command = new PutObjectCommand({
         Bucket: this.bucketName,
         Key: key,
@@ -110,7 +109,6 @@ export class S3Service {
       })
 
       await this.client.send(command)
-      
     } catch (error) {
       throw new InternalServerErrorException(error)
     }
@@ -119,7 +117,7 @@ export class S3Service {
   extractObjectKey(url: string): string {
     try {
       const urlObj = new URL(url);
-      const pathParts = urlObj.pathname.split('/');
+      const pathParts = urlObj.pathname.split('/uploads/');
       return pathParts[pathParts.length - 1];
     } catch (error) {
       throw new Error('Invalid URL format');

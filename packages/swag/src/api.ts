@@ -13,6 +13,21 @@ export type RequestRegisterDto = {
   role: string;
 };
 
+export type AudioDto = {
+  id: number;
+  s3_key: string;
+  s3_url: string;
+  duration: string;
+  file_format: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+export type ResponseFetchAudioDto = {
+  userId: number;
+  audio: AudioDto[];
+};
+
 export type RequestUploadAudioDto = {
   file: Blob;
 };
@@ -43,6 +58,15 @@ export const authControllerRegister = (
       options);
     }
   
+export const audioControllerFetch = (
+    
+ options?: SecondParameter<typeof fetchInstance>,) => {
+      return fetchInstance<ResponseFetchAudioDto>(
+      {url: `/audio`, method: 'GET'
+    },
+      options);
+    }
+  
 export const audioControllerUpload = (
     requestUploadAudioDto: RequestUploadAudioDto,
  options?: SecondParameter<typeof fetchInstance>,) => {const formData = new FormData();
@@ -67,5 +91,6 @@ export const audioControllerDelete = (
   
 export type AppControllerGetHelloResult = NonNullable<Awaited<ReturnType<typeof appControllerGetHello>>>
 export type AuthControllerRegisterResult = NonNullable<Awaited<ReturnType<typeof authControllerRegister>>>
+export type AudioControllerFetchResult = NonNullable<Awaited<ReturnType<typeof audioControllerFetch>>>
 export type AudioControllerUploadResult = NonNullable<Awaited<ReturnType<typeof audioControllerUpload>>>
 export type AudioControllerDeleteResult = NonNullable<Awaited<ReturnType<typeof audioControllerDelete>>>

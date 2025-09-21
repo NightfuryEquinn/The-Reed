@@ -1,6 +1,6 @@
 import IconAction from "@/components/button/IconAction";
 import Caption from "@/components/label/Caption";
-import { tokenStorage, userStorage } from "@/repos/store";
+import { idTokenStorage, tokenStorage, userStorage } from "@/repos/store";
 import { signOut } from "aws-amplify/auth";
 import Constants from "expo-constants";
 import { useRouter } from "expo-router";
@@ -15,6 +15,7 @@ export default function Profile() {
   const handleLogout = async () => {
     await userStorage.removeUser()
     await tokenStorage.removeToken()
+    await idTokenStorage.removeIdToken()
 
     await signOut()
 
@@ -24,8 +25,9 @@ export default function Profile() {
   return (
     <View className="m-10 flex-1 justify-between">
       <View className="gap-4">
-        <IconAction source="user" title="Edit Profile" />
-        <IconAction source="gear" title="Settings" />
+        <IconAction disabled={true} source="user" title="Edit Profile" />
+        <IconAction disabled={true} source="gear" title="Settings" />
+        <IconAction disabled={true} source="dollar" title="Go Premium" />
         <IconAction source="sign-out" title="Logout" onPress={handleLogout} />
       </View>
 

@@ -13,6 +13,7 @@ import "../styles/global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { idTokenStorage, tokenStorage, userStorage } from "@/repos/store";
+import { Alert } from "react-native";
 
 SplashScreen.preventAutoHideAsync()
 
@@ -36,12 +37,37 @@ export default function RootLayout() {
     AlegreyaSans_700Bold
   })
 
+  const checkTokenExpiry = (token?: string) => {
+    if (!token) return true
+
+    const payload = JSON.parse(
+      Buffer.from(token.split('.')[1], 'base64').toString()
+    )
+
+    const expo = payload.exp * 1000
+    return Date.now() > expo
+  }
+
   useEffect(() => {
     async function checkSession() {
       if (loaded || error) {
         const session = await fetchAuthSession();
 
         if (session.tokens) {
+          const idToken = session.tokens.idToken?.toString() || '';
+          const accessToken = session.tokens.accessToken?.toString() || '';
+
+          if (checkTokenExpiry(idToken) || checkTokenExpiry(accessToken)) {
+            await userStorage.removeUser()
+            await tokenStorage.removeToken()
+            await idTokenStorage.removeIdToken()
+
+            router.push('/login')
+
+            Alert.alert('Session expired', 'Please login again')
+            return
+          }
+
           await userStorage.setUser({
             id: session.tokens.idToken?.payload?.sub || '',
             email: session.tokens.idToken?.payload?.email?.toString() || '',

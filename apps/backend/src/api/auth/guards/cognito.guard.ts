@@ -1,3 +1,4 @@
+import { UserRoles } from '@/common/types';
 import {
   CanActivate,
   ExecutionContext,
@@ -43,7 +44,7 @@ export class CognitoAuthGuard implements CanActivate {
         issuer: `https://cognito-idp.${process.env.S3_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`,
       });
 
-      request.user = payload;
+      request.user = payload
 
       if (requiredRoles?.length) {
         const userRoles = (payload['custom:roles'] ?? []) as string[];
